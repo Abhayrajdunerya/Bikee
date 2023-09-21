@@ -10,10 +10,10 @@ import Image from "next/image"
 import CustomButton from '@/components/CustomButton'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  // { name: 'Dashboard', href: '#', current: true },
+  { name: 'Contact Us', href: '/contact', current: false },
+  // { name: 'Projects', href: '#', current: false },
+  // { name: 'Calendar', href: '#', current: false },
 ]
 
 function classNames(...classes) {

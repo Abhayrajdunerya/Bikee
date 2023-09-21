@@ -240,7 +240,7 @@
 
 /* Form Field */
 .form_field-input {
-  @apply w-full outline-0 border-none bg-light-white-100 rounded-xl p-4;
+  @apply w-full outline-0 border-none bg-primary-blue-100 rounded-xl p-4;
 }
 
 /* Project Form */
