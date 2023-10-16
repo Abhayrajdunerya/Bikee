@@ -27,7 +27,7 @@ const HowToUse = () => {
     ]
 
   return (
-    <div className='feature flex flex-col pb-16'>
+    <div className='feature flex flex-col pb-16 bg-gray-200'>
         <div className="py-16 flex justify-center items-center text-3xl font-bold border-t-2">
             How to use
         </div>

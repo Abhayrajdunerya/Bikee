@@ -17,17 +17,22 @@ const UserSchema = new Schema({
         type: Number,
         unique: [true, 'Mobile no. already exists!']
     },
+    gender: {
+        type: String,
+        enum: ['male', 'female', 'other'],
+    },
     address: {
         pincode: Number,
         state: String,
         city: String,
-        currentAddress: String,
-        permanentAddress: String,
+        area: String,
     },
-    documents: {
-        aadhar: Object,
-        drivingLicense: Object,
-    },
+    aadhar: Object,
+    drivingLicense: Object,
+    role: {
+        type: String,
+        enum: ['user', 'admin', 'manager', 'worker']
+    }
 }, {timestamps: true});
 
 const User = models.User || model('User', UserSchema);

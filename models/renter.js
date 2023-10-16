@@ -7,10 +7,16 @@ const RenterSchema = new Schema({
         ref: 'User',
         required: [true, 'User is required!'],
     },
-    vehicle: [
+    bikes: [
         {
             type: ObjectId,
-            ref: 'Bike' || 'Car',
+            ref: 'Bike',
+        }
+    ],
+    cars: [
+        {
+            type: ObjectId,
+            ref: 'Car',
         }
     ],
 }, {timestamps: true});

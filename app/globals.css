@@ -249,11 +249,11 @@
 }
 
 .form_image-container {
-  @apply w-full lg:min-h-[400px] min-h-[200px] relative;
+  @apply w-full min-h-[200px] relative;
 }
 
 .form_image-label {
-  @apply z-10 text-center w-full h-full p-20 text-gray-100 border-2 border-gray-50 border-dashed;
+  @apply z-10 text-center w-full h-full p-20 border-2 border-gray-50 border-dashed;
 }
 
 .form_image-input {

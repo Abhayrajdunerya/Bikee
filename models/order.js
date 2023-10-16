@@ -4,20 +4,17 @@ const {ObjectId} = Schema;
 const OrderSchema = new Schema({
     vehicle: {
         type: ObjectId,
-        ref: 'Bike' || 'Car',
+        ref: 'vehicle',
     },
     orderStatus: {
         type: String,
-        default: 'BOOKED'
-        // default: 'Not_Processed',
-        // enum: [
-        //     'Not_Processed',
-        //     'Processing',
-        //     'Dispatched',
-        //     'Cancelled',
-        //     'Completed',
-        //     'Cash On Delivery',
-        // ]
+        default: 'Not Processed',
+        enum: [
+            'Not Processed',
+            'Booked',
+            'Cancelled',
+            'Returned',
+        ]
     },
     paymentIntent: {},
     orderedBy: { type: ObjectId, ref: 'User' },

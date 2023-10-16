@@ -1,10 +1,10 @@
 import Image from 'next/image'
 
-import Hero from '@/components/Hero'
+import Hero from '@/components/sections/Hero'
 import VehicalCard from '@/components/VehicalCard'
 import Feature from '@/components/sections/Feature'
 import HowToUse from '@/components/sections/HowToUse'
-import BookingFilters from '@/components/BookingFilters'
+import BookingFilters from '@/components/sections/BookingFilters'
 
 export default function Home() {
 
@@ -23,14 +23,14 @@ export default function Home() {
       <BookingFilters />
       <Feature />
       <HowToUse />
-      <div className="home__cars-wrapper p-4">
+      {/* <div className="home__cars-wrapper p-4">
         <VehicalCard car={car} />
         <VehicalCard car={car} />
         <VehicalCard car={car} />
         <VehicalCard car={car} />
         <VehicalCard car={car} />
         
-      </div>
+      </div> */}
     </div>
   )
 }
