@@ -1,15 +1,35 @@
 'use client'
 
-import AdminSidebar from '@/components/sidebar/ManagerSidebar'
-import AddProductForm from '@/components/forms/AddProductForm'
-import AddProductForm2 from '@/components/forms/AddProductForm2'
-import { Radio, Space } from 'antd'
 import React, {useState, useEffect} from 'react'
+import Link from 'next/link'
+import AdminSidebar from '@/components/sidebar/ManagerSidebar'
 import UserThumbnail from '@/components/UserThumbnail'
+
+import { getRegisteredUsers } from '@/libs/manager'
+import { toast } from 'react-toastify'
 
 const page = () => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [regUsers, setRegUsers] = useState([])
+
+    useEffect(() => {
+        loadRegUsers();
+    }, [])
+
+    const loadRegUsers = async () => {
+        try {
+            const response = await getRegisteredUsers();
+            setRegUsers(response);
+            if (response.length === 0) {
+                toast.error('No renters are there!');
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error('Failed to load renters!');
+        }
+    }
+    
 
     return (
         <div className='relative flex'>
@@ -30,16 +50,9 @@ const page = () => {
                         {/* <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them.</p> */}
                     </div>
                     <div className="flex flex-wrap -m-2">
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
+                        {regUsers && regUsers.length && regUsers.map((item, i) => (
+                            <Link key={item._id} href={`/manager/registered-users/${item._id}`}><UserThumbnail img={item.user.image} email={item.user.email} name={item.user.name} /></Link>
+                        ))}
                     </div>
                 </div>
             </div>

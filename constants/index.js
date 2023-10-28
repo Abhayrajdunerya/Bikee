@@ -1,72 +1,19 @@
-export const manufacturers = [
-  "Acura",
-  "Alfa Romeo",
-  "Aston Martin",
-  "Audi",
-  "Bentley",
-  "BMW",
-  "Buick",
-  "Cadillac",
-  "Chevrolet",
-  "Chrysler",
-  "Citroen",
-  "Dodge",
-  "Ferrari",
-  "Fiat",
-  "Ford",
-  "GMC",
-  "Honda",
-  "Hyundai",
-  "Infiniti",
-  "Jaguar",
-  "Jeep",
-  "Kia",
-  "Lamborghini",
-  "Land Rover",
-  "Lexus",
-  "Lincoln",
-  "Maserati",
-  "Mazda",
-  "McLaren",
-  "Mercedes-Benz",
-  "MINI",
-  "Mitsubishi",
-  "Nissan",
-  "Porsche",
-  "Ram",
-  "Rolls-Royce",
-  "Subaru",
-  "Tesla",
-  "Toyota",
-  "Volkswagen",
-  "Volvo",
-];
-
-export const yearsOfProduction = [
-  { title: "Year", value: "" },
-  { title: "2015", value: "2015" },
-  { title: "2016", value: "2016" },
-  { title: "2017", value: "2017" },
-  { title: "2018", value: "2018" },
-  { title: "2019", value: "2019" },
-  { title: "2020", value: "2020" },
-  { title: "2021", value: "2021" },
-  { title: "2022", value: "2022" },
-  { title: "2023", value: "2023" },
-];
-
 export const fuels = [
   {
-    title: "Fuel",
-    value: "",
+    title: "Patrol",
+    value: "patrol",
+  },
+  {
+    title: "Diesel",
+    value: "diesel",
   },
   {
     title: "Gas",
-    value: "Gas",
+    value: "gas",
   },
   {
     title: "Electricity",
-    value: "Electricity",
+    value: "electricity",
   },
 ];
 
@@ -146,266 +93,164 @@ export const bookingTypes = [
   
 ]
 
-export const times = [
-  {
-    name: '6:00 a.m.',
-    value: '6:00 a.m.',
-  },
-  {
-    name: '7:00 a.m.',
-    value: '7:00 a.m.',
-  },
-  {
-    name: '8:00 a.m.',
-    value: '8:00 a.m.',
-  },
-  {
-    name: '9:00 a.m.',
-    value: '9:00 a.m.',
-  },
-  {
-    name: '10:00 a.m.',
-    value: '10:00 a.m.',
-  },
-  {
-    name: '11:00 a.m.',
-    value: '11:00 a.m.',
-  },
-
-  {
-    name: '12:00 p.m.',
-    value: '12:00 p.m.',
-  },
-  {
-    name: '1:00 p.m.',
-    value: '1:00 p.m.',
-  },
-  {
-    name: '2:00 p.m.',
-    value: '2:00 p.m.',
-  },
-  {
-    name: '3:00 p.m.',
-    value: '3:00 p.m.',
-  },
-  {
-    name: '4:00 p.m.',
-    value: '4:00 p.m.',
-  },
-  {
-    name: '5:00 p.m.',
-    value: '5:00 p.m.',
-  },
-  {
-    name: '6:00 p.m.',
-    value: '6:00 p.m.',
-  },
-  {
-    name: '7:00 p.m.',
-    value: '7:00 p.m.',
-  },
-  {
-    name: '8:00 p.m.',
-    value: '8:00 p.m.',
-  },
-  {
-    name: '9:00 p.m.',
-    value: '9:00 p.m.',
-  },
-  {
-    name: '10:00 p.m.',
-    value: '10:00 p.m.',
-  },
-  {
-    name: '11:00 p.m.',
-    value: '11:00 p.m.',
-  },
-  
-]
-
 export const bikeBrand = [
   {
+    name: 'Bajaj',
+    value: 'bajaj',
+  },
+  {
     name: 'Hero',
-    value: 'HERO',
+    value: 'hero',
   },
   {
     name: 'Honda',
-    value: 'HONDA',
-  },
-  {
-    name: 'TVS',
-    value: 'TVS',
-  },
-  {
-    name: 'Royal Enfield',
-    value: 'ROYAL ENFIELD',
-  },
-  {
-    name: 'KTM',
-    value: 'KTM',
-  },
-  {
-    name: 'Yamaha',
-    value: 'YAMAHA',
-  },
-  {
-    name: 'Suzuki',
-    value: 'SUZUKI',
-  },
-  {
-    name: 'Mahindra',
-    value: 'MAHINDRA',
-  },
-  {
-    name: 'Jawa',
-    value: 'JAWA',
+    value: 'honda',
   },
   {
     name: 'Kawasaki',
-    value: 'KAWASAKI',
+    value: 'kawasaki',
   },
   {
-    name: 'Ducati',
-    value: 'DUCATI',
+    name: 'KTM',
+    value: 'ktm',
+  },
+  {
+    name: 'Mahindra',
+    value: 'mahindra',
+  },
+  {
+    name: 'Royal Enfield',
+    value: 'royal enfield',
+  },
+  {
+    name: 'Suzuki',
+    value: 'suzuki',
+  },
+  {
+    name: 'TVS',
+    value: 'tvs',
+  },
+  {
+    name: 'Yamaha',
+    value: 'yamaha',
   },
   {
     name: 'Others',
-    value: 'OTHERS',
+    value: 'others',
   },
 ]
 
 export const carBrand = [
   {
-    name: 'Maruti Suzuki',
-    value: 'MARUTI SUZUKI',
+    name: 'Audi',
+    value: 'audi',
+  },
+  {
+    name: 'BMW',
+    value: 'bmw',
+  },
+  {
+    name: 'Ferrari',
+    value: 'ferrari',
+  },
+  {
+    name: 'Ford',
+    value: 'ford',
+  },
+  {
+    name: 'Fiat',
+    value: 'fiat',
+  },
+  {
+    name: 'Honda',
+    value: 'honda',
   },
   {
     name: 'Hyundai',
     value: 'HYUNDAI',
   },
   {
-    name: 'Tata motors',
-    value: 'TATA MOTORS',
+    name: 'Jeep',
+    value: 'jeep',
+  },
+  {
+    name: 'Kia',
+    value: 'kia',
+  },
+  {
+    name: 'Lamborghini',
+    value: 'lamborghini',
+  },
+  {
+    name: 'Land Rover',
+    value: 'land rover',
   },
   {
     name: 'Mahindra',
     value: 'MAHINDRA',
   },
   {
-    name: 'Kia',
-    value: 'KIA',
-  },
-  {
-    name: 'Toyota',
-    value: 'TOYOTA',
-  },
-  {
-    name: 'Honda',
-    value: 'HONDA',
-  },
-  {
-    name: 'Renault',
-    value: 'RENAULT',
-  },
-  {
-    name: 'Volkswagen',
-    value: 'VOLKSWAGEN',
-  },
-  {
-    name: 'MG Motors',
-    value: 'MG MOTORS',
-  },
-  {
-    name: 'Skoda',
-    value: 'SKODA',
-  },
-  {
-    name: 'Ford',
-    value: 'FORD',
-  },
-  {
-    name: 'Fiat',
-    value: 'FIAT',
-  },
-  {
-    name: 'Jeep',
-    value: 'JEEP',
-  },
-  {
-    name: 'Nissan',
-    value: 'NISSAN',
-  },
-  {
-    name: 'BMW',
-    value: 'BMW',
+    name: 'Maruti Suzuki',
+    value: 'MARUTI SUZUKI',
   },
   {
     name: 'Mercedes Benz',
-    value: 'MERCEDES BENZ',
+    value: 'mercedes benz',
   },
   {
-    name: 'Audi',
-    value: 'AUDI',
+    name: 'MG Motors',
+    value: 'mg motors',
   },
   {
-    name: 'Land Rover',
-    value: 'LAND ROVER',
+    name: 'Nissan',
+    value: 'nissan',
   },
   {
-    name: 'Lamborghini',
-    value: 'LAMBORGHINI',
+    name: 'Renault',
+    value: 'renault',
   },
   {
     name: 'Rolls Royce',
-    value: 'ROLLS ROYCE',
+    value: 'rolls royce',
+  },
+  {
+    name: 'Skoda',
+    value: 'skoda',
+  },
+  {
+    name: 'Tata motors',
+    value: 'TATA MOTORS',
+  },
+  {
+    name: 'Toyota',
+    value: 'toyota',
+  },
+  {
+    name: 'Volkswagen',
+    value: 'volkswagen',
   },
   {
     name: 'Others',
-    value: 'OTHERS',
+    value: 'others',
   },
 ]
 
-export const centerLocation = [
-  {
-    city: 'indore',
-    locations: [
-      'bhawarkua square',
-      'vijay nagar',
-      'palasia',
-    ],
-  
-  },
-  {
-    city: 'bhopal',
-    locations: [
-      'db mall',
-      'nit bhopal',
-      'taj ul mazid'
-    ],
-  
-  },
-  {
-    city: 'gwalior',
-    locations: [
-      'gwalior fort',
-      'railway station',
-      'sun temple'
-    ],
-  
-  },
-  {
-    city: 'jabalpur',
-    locations: [
-      'bhedaghat road',
-      'high court',
-      'jec college'
-    ]
-  
-  },
-  
+export const centerCities = [
+  "bhopal",
+  "indore",
+  "gwalior",
+  "sagar",
+  "jabalpur",
 ]
 
 export const becomeRenterInstructions = [
   'Center timings: 09:00AM - 09:00PM',
   'Bring 2 hard copies of Aadhar card and Driving License at center.',
 ]
+
+export const positions = [
+  'manager',
+  'worker',
+]
+
+export const logo = '/logo_2.png'

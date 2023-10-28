@@ -7,18 +7,18 @@ const RenterSchema = new Schema({
         ref: 'User',
         required: [true, 'User is required!'],
     },
-    bikes: [
+    center: {
+        type: ObjectId,
+        ref: 'center',
+        required: [true, 'Center is required!'],
+        // unique: false,
+    },
+    income: [
         {
-            type: ObjectId,
-            ref: 'Bike',
+            date: Date,
+            credit: Number
         }
-    ],
-    cars: [
-        {
-            type: ObjectId,
-            ref: 'Car',
-        }
-    ],
+    ]
 }, {timestamps: true});
 
 const Renter = models.Renter || model('Renter', RenterSchema);

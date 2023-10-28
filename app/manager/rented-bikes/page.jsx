@@ -1,15 +1,40 @@
 'use client'
 
 import AdminSidebar from '@/components/sidebar/ManagerSidebar'
-import AddProductForm from '@/components/forms/AddProductForm'
-import AddProductForm2 from '@/components/forms/AddProductForm2'
-import { Radio, Space } from 'antd'
 import React, {useState, useEffect} from 'react'
-import UserThumbnail from '@/components/UserThumbnail'
+import { getRentedVehicles } from '@/libs/vehicle'
+import VehicalCard from '@/components/card/VehicleCard'
+import { toast } from 'react-toastify'
 
 const page = () => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [bikes, setBikes] = useState([]);
+
+    const filterParams = {
+        bookingType: '', 
+        pickingDate: '', 
+        droppingDate: '', 
+        vehicleType: '', 
+        city: ''
+    }
+
+    useEffect(() => {
+        loadBikes();
+    }, [])
+
+    const loadBikes = async () => {
+        try {
+            const response = await getRentedVehicles('bike')
+            setBikes(response);
+            if (response.length === 0) {
+                toast.success('No bikes are rented!');
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error('Failed to load bikes!');
+        }
+    }
 
     return (
         <div className='relative flex'>
@@ -30,16 +55,7 @@ const page = () => {
                         {/* <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them.</p> */}
                     </div>
                     <div className="flex flex-wrap -m-2">
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
+                        {bikes && bikes.length && bikes.map((item, i) => <VehicalCard key={item._id} precise={true} vehicle={item} filterParams={filterParams} showDelete={false} showEdit={false} />)}
                     </div>
                 </div>
             </div>

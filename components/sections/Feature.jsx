@@ -26,8 +26,8 @@ const Feature = () => {
         },
         {
             imgUrl: '/assets/icons/person.png',
-            heading: 'Verified Dealers',
-            content: "Every Single Dealer is Committed to Quality Service."
+            heading: 'Verified Centers',
+            content: "Every Single Center is Committed to Quality Service."
         },
         {
             imgUrl: '/assets/icons/secure-payment.png',

@@ -1,28 +1,10 @@
-const NEXT_SERVER_API = Process.env.SERVER_API
-
-// actions on center
-export const getCenter = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
-
-    if (!response.ok) {
-        throw new Error("Failed to fetch center!");
-    }
-
-    return await response.json();
-}
-
-export const getCenters = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
-
-    if (!response.ok) {
-        throw new Error("Failed to fetch centers!");
-    }
-
-    return await response.json();
-}
-
-export const addNewCenter = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+export const addNewCenter = async (name, email, mobile, address, location) => {
+    const response = await fetch(`/api/admin/center`, {
+        method: 'POST',
+        body: JSON.stringify({
+            name, email, mobile, address, location
+        })
+    })
 
     if (!response.ok) {
         throw new Error("Failed to add new center!");
@@ -31,8 +13,10 @@ export const addNewCenter = async () => {
     return await response.json();
 }
 
-export const removeCenter = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+export const removeCenter = async (centerId) => {
+    const response = await fetch(`/api/admin/center/${centerId}`, {
+        method: 'DELETE'
+    })
 
     if (!response.ok) {
         throw new Error("Failed to remove center!");
@@ -41,8 +25,13 @@ export const removeCenter = async () => {
     return await response.json();
 }
 
-export const updateCenter = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+export const updateCenter = async (centerId, name, email, mobile, address, location) => {
+    const response = await fetch(`/api/admin/center/${centerId}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            name, email, mobile, address, location
+        })
+    })
 
     if (!response.ok) {
         throw new Error("Failed to update center!");
@@ -52,8 +41,13 @@ export const updateCenter = async () => {
 }
 
 // actions on employee
-export const addEmployee = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+export const addEmployee = async (user, position, center) => {
+    const response = await fetch(`/api/admin/employees`, {
+        method: 'POST',
+        body: JSON.stringify({
+            user, position, center 
+        })
+    })
 
     if (!response.ok) {
         throw new Error("Failed to add employee!");
@@ -62,21 +56,14 @@ export const addEmployee = async () => {
     return await response.json();
 }
 
-export const removeEmployee = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+export const getEmployeesByCenter = async (centerId) => {
+    const response = await fetch(`/api/admin/employees/center`, {
+        method: 'POST',
+        body: JSON.stringify(centerId)
+    })
 
     if (!response.ok) {
-        throw new Error("Failed to remove employee!");
-    }
-
-    return await response.json();
-}
-
-export const updateEmployee = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
-
-    if (!response.ok) {
-        throw new Error("Failed to update employee!");
+        throw new Error("Failed to fetch employees!");
     }
 
     return await response.json();
@@ -84,7 +71,7 @@ export const updateEmployee = async () => {
 
 // other img actions
 export const getIncomeHistory = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+    const response = await fetch(`/api/`)
 
     if (!response.ok) {
         throw new Error("Failed to get income history!");

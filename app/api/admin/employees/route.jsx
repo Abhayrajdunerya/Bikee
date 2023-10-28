@@ -1,4 +1,5 @@
 import Employee from "@/models/employee"
+import User from "@/models/user";
 import { connectToDB } from "@/utils/database";
 
 export const GET = async (req) => {
@@ -21,6 +22,9 @@ export const POST = async (req) => {
         await connectToDB();
         const {user, position, center} = await req.json();
         const response = await Employee.create({user, position, center});
+        const updateRes = await User.findByIdAndUpdate(user, {
+            role: position
+        })
         return new Response(JSON.stringify(response), {status: 200});
     } catch (error) {
         console.log(error);

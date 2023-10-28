@@ -16,8 +16,8 @@ export const GET = async (req) => {
 export const POST = async (req) => {
     try {
         await connectToDB();
-        const {email, mobile, address} = await req.json();
-        const response = await Center.create({email, mobile, address});
+        const {name, email, mobile, address, location} = await req.json();
+        const response = await Center.create({name, email, mobile, address, location});
         return new Response(JSON.stringify(response), {status: 200});
     } catch (error) {
         console.log(error);

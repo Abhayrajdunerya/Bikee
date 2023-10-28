@@ -6,18 +6,29 @@ const OrderSchema = new Schema({
         type: ObjectId,
         ref: 'vehicle',
     },
+    bookingInfo: {
+        bookingType: String,
+        city: String,
+        vehicleType: String,
+        pickingDate: Date,
+        droppingDate: Date,
+    },
     orderStatus: {
         type: String,
-        default: 'Not Processed',
+        default: 'not processed',
         enum: [
-            'Not Processed',
-            'Booked',
-            'Cancelled',
-            'Returned',
+            'not processed',
+            'booked',
+            'cancelled',
+            'returned',
         ]
     },
     paymentIntent: {},
-    orderedBy: { type: ObjectId, ref: 'User' },
+    orderedBy: { type: ObjectId, ref: 'user' },
+    center: {
+        type: ObjectId,
+        ref: 'center'
+    }
 }, {timestamps: true});
 
 const Order = models.Order || model('Order', OrderSchema);

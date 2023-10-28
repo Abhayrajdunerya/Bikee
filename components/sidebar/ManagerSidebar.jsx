@@ -10,6 +10,7 @@ const ManagerSidebar = ({sidebarOpen, setSidebarOpen}) => {
                 <Menu>
                     <MenuItem className='sm:hidden' onClick={() => setSidebarOpen(false)}> <div className="flex justify-end"><AiOutlineCloseCircle className='' size={25} /></div> </MenuItem>
                     <MenuItem component={<Link href={'/manager/dashboard'} />} > Dashboard </MenuItem>
+                    <MenuItem component={<Link href={'/manager/orders'} />} > Orders </MenuItem>
                     <MenuItem component={<Link href={'/manager/registered-users'} />} > Registered Users </MenuItem>
                     <MenuItem component={<Link href={'/manager/avl-bikes'} />} > Avl. Bikes </MenuItem>
                     <MenuItem component={<Link href={'/manager/avl-cars'} />} > Avl. Cars </MenuItem>

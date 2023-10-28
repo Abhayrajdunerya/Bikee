@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react";
-import DatePicker from "react-datepicker";
+import { useRouter } from "next/navigation"; 
 import moment from 'moment'
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { differenceInDays, differenceInMonths, differenceInWeeks, setHours, setMinutes, getHours } from 'date-fns'
 
 import CustomButton from '@/components/CustomButton'
 import CustomSelect from '@/components/CustomSelect'
@@ -12,23 +13,98 @@ import {cities, bookingTypes, times} from '@/constants'
 
 const BookingFilters = () => {
 
+    const router = useRouter();
+
     const [city, setCity] = useState('');
     const [vehicle, setVehicle] = useState('');
     const [bookingType, setBookingType] = useState('');
     const [pickingDate, setPickingDate] = useState('');
-    const [pickingTime, setPickingTime] = useState('');
     const [droppingDate, setDroppingDate] = useState('');
-    const [droppingTime, setDroppingTime] = useState('');
+
+    
 
     const handleSubmit = () => {
-        if (!city || !vehicle || !bookingType || !pickingDate || !pickingTime || !droppingDate || !droppingTime) {
-            window.alert('All fields are required');
+        if (!checkValidation()) {
+            console.log('validation false');
             return;
         } else {
-            console.log("Home -> Find clicked");
+            console.log('validation true');
+            router.push(`/shop?city=${city?.value}&vehicle=${vehicle}&bookingType=${bookingType?.value}&pickingDate=${pickingDate}&droppingDate=${droppingDate}`);
+        }
+    }
 
+    const checkValidation = () => {
+        if (!city || !vehicle || !bookingType || !pickingDate || !droppingDate) {
+            window.alert('All fields are required');
+            return false;
+        } else if (bookingType === 'hourly' && checkHours(pickingDate, droppingDate) === false) {
+            window.alert("Please enter correct picking & dropping time for booking type 'hourly'");
+            return false;
+        } else if (bookingType === 'daily' && checkDays(pickingDate, droppingDate) === false) {
+            window.alert("Please select atleast 1 day for booking type 'daily'");
+            return false;
+        } else if (bookingType === 'weekly' && checkWeeks(pickingDate, droppingDate) ===false) {
+            window.alert("Please select atleast 1 week for booking type 'weekly'");
+            return false;
+        } else if (bookingType === 'monthly' && checkMonths(pickingDate, droppingDate) === false) {
+            window.alert("Please select atleast 1 month for booking type 'monthly'");
+            return false;
         }
 
+        return true;
+    }
+
+    const checkHours = (pick, drop) => {
+
+        const pickHrs = new Date(pick).getHours();
+        const dropHrs = new Date(drop).getHours();
+
+        const hrs = dropHrs-pickHrs;
+        
+        if (hrs <= 0) {
+            return false;
+        } else {   
+            return true;
+        }
+    }
+
+    const checkDays = (startDate, endDate) => {
+        const startDateInDays = differenceInDays(startDate, new Date(0));
+        const endDateInDays = differenceInDays(endDate, new Date(0));
+
+        const dayDiff = (endDateInDays - startDateInDays);
+
+        if (dayDiff <= 0) {
+            return false;
+        } else {   
+            return true;
+        }
+    }
+
+    const checkWeeks = (startDate, endDate) => {
+        const startDateInWeeks = differenceInWeeks(startDate, new Date(0));
+        const endDateInWeeks = differenceInWeeks(endDate, new Date(0));
+
+        const weekDiff = (endDateInWeeks - startDateInWeeks);
+
+        if (weekDiff <= 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    const checkMonths = (startDate, endDate) => {
+        const startDateInMonths = differenceInMonths(startDate, new Date(0));
+        const endDateInMonths = differenceInMonths(endDate, new Date(0));
+
+        const monthDiff = (endDateInMonths - startDateInMonths);
+
+        if (monthDiff <= 0) {
+            return false;
+        } else {   
+            return true;
+        }
     }
 
     return (
@@ -52,7 +128,7 @@ const BookingFilters = () => {
                 </div>
 
                 <div className="flex flex-wrap">
-                    <div className="flex sm:flex-col">
+                    <div className="flex">
                         <div className="m-2">
                             <CustomSelect title={'Select City'} options={cities} selected={city} setSelected={setCity} />
                         </div>
@@ -65,22 +141,52 @@ const BookingFilters = () => {
                         <div className="m-2">
                             <label htmlFor="underline_select" className="sr-only">Picking Up Date</label>
                             {/* <input onChange={(e) => setPickingDate(e.target.value)} name="pickingDate" type="date" value={pickingDate} className="w-fit custom-filter__btn border border-gray-200" placeholder="Picking Date" /> */}
-                            <DatePicker selected={pickingDate} onChange={(date) => setPickingDate(date)} placeholderText="Picking Date" minDate={moment().toDate()} dateFormat="dd/MM/yyyy" className="w-fit custom-filter__btn border border-gray-200" />
+                            <DatePicker selected={pickingDate} 
+                                onChange={(date) => setPickingDate(date)} 
+                                placeholderText="Picking Date" minDate={moment().toDate()} 
+
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={60}
+                                timeCaption="time"
+
+                                // minTime={setHours(setMinutes(new Date(), 0), new Date().getHours())}
+                                // maxTime={setHours(setMinutes(new Date(), 30), 23)}
+
+                                // dateFormat="dd/MM/yyyy"
+                                dateFormat="MMMM d, yyyy h:mm aa"
+                                className="w-fit custom-filter__btn border border-gray-200" 
+                            />
                         </div>
-                        <div className="m-2">
+                        {/* <div className="m-2">
                             <CustomSelect title={'Picking Time'} options={times} selected={pickingTime} setSelected={setPickingTime} />
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="flex sm:flex-col">
                         <div className="m-2">
                             <label htmlFor="underline_select" className="sr-only">Dropping Off Date</label>
-                            <DatePicker selected={droppingDate} onChange={(date) => setDroppingDate(date)} placeholderText="Dropping Date" minDate={moment().toDate()} dateFormat="dd/MM/yyyy" className="w-fit custom-filter__btn border border-gray-200" />
+                            <DatePicker selected={droppingDate} 
+                                onChange={(date) => setDroppingDate(date)} 
+                                placeholderText="Dropping Date" minDate={moment().toDate()} 
+
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={60}
+                                timeCaption="time"
+
+                                // minTime={setHours(setMinutes(new Date(), 0), pickingDate)}
+                                // maxTime={setHours(setMinutes(new Date(), 30), 23)}
+
+                                // dateFormat="dd/MM/yyyy"
+                                dateFormat="MMMM d, yyyy h:mm aa"
+                                className="w-fit custom-filter__btn border border-gray-200" 
+                            />
                             {/* <input onChange={(e) => setDroppingDate(e.target.value)} name="droppingDate" type="date" value={droppingDate} className="w-fit custom-filter__btn border border-gray-200" placeholder="Dropping Date" /> */}
                         </div>
-                        <div className="m-2">
+                        {/* <div className="m-2">
                             <CustomSelect title={'Dropping Time'} options={times} selected={droppingTime} setSelected={setDroppingTime} />
-                        </div>
+                        </div> */}
                     </div>      
                 </div>
 

@@ -15,7 +15,7 @@ const VehicleSchema = new Schema({
     },
     fuel: {
         type: String,
-        enum: ['PATROL', 'DIESEL', 'ELECTRIC'],
+        // enum: ['patrol', 'diesel', 'electric'],
     },
     engineCap: {
         type: Number,
@@ -29,7 +29,7 @@ const VehicleSchema = new Schema({
     },
     owner: {
         type: ObjectId,
-        ref: 'User',
+        ref: 'renter',
         required: [true, 'Owner is required!'],
     },
     images: Array,
@@ -41,12 +41,22 @@ const VehicleSchema = new Schema({
     ],
     vehicleType: {
         type: String,
-        enum: ['bike', 'car']
-    }
-
+        enum: ['bike', 'car'],
+        require: [true, 'Vehicle type is required!']
+    },
+    price: {
+        hourly: Number,
+        daily: Number,
+        weekly: Number,
+        monthly: Number,
+        
+    },
+    depositeAmt: Number,
+    perHourCharge: Number,
+    terms: String,
 }, {timestamps: true});
 
-const Vehicle = models.Vehicle || model('Bike', VehicleSchema);
+const Vehicle = models.Vehicle || model('Vehicle', VehicleSchema);
 
 export default Vehicle;
 

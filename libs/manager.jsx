@@ -1,8 +1,6 @@
-const NEXT_SERVER_API = Process.env.SERVER_API
-
 // actions on users
 export const getNewUserRequests = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+    const response = await fetch(`/api/manager/new-request`)
 
     if (!response.ok) {
         throw new Error("Failed to fetch new user's request!");
@@ -11,8 +9,18 @@ export const getNewUserRequests = async () => {
     return await response.json();
 }
 
+export const getNewUserRequest = async (reqId) => {
+    const response = await fetch(`/api/manager/new-request/${reqId}`)
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch user request!");
+    }
+
+    return await response.json();
+}
+
 export const getRegisteredUsers = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+    const response = await fetch(`/api/manager/registered-users`)
 
     if (!response.ok) {
         throw new Error("Failed to fetch registered users!");
@@ -21,8 +29,23 @@ export const getRegisteredUsers = async () => {
     return await response.json();
 }
 
-export const verifyUser = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+export const getRegisteredUser = async (renterId) => {
+    const response = await fetch(`/api/manager/registered-users/${renterId}`)
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch renter!");
+    }
+
+    return await response.json();
+}
+
+export const verifyUser = async (reqId, user, center) => {
+    const response = await fetch(`/api/manager/verify-user`, {
+        method: 'POST',
+        body: JSON.stringify({
+            reqId, user, center
+        })
+    })
 
     if (!response.ok) {
         throw new Error("Failed to verify user!");
@@ -32,53 +55,9 @@ export const verifyUser = async () => {
 }
 
 
-
-// actions on bikes
-export const getBikeStatus = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
-
-    if (!response.ok) {
-        throw new Error("Failed to fetch bike status!");
-    }
-
-    return await response.json();
-}
-
-export const updateBikeStatus = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
-
-    if (!response.ok) {
-        throw new Error("Failed to update bike status!");
-    }
-
-    return await response.json();
-}
-
-
-// actions on cars
-export const getCarStatus = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
-
-    if (!response.ok) {
-        throw new Error("Failed to fetch car status!");
-    }
-
-    return await response.json();
-}
-
-export const updateCarStatus = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
-
-    if (!response.ok) {
-        throw new Error("Failed to update car status!");
-    }
-
-    return await response.json();
-}
-
 // actions on orders
 export const getOrders = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+    const response = await fetch(`/api/manager/orders`)
 
     if (!response.ok) {
         throw new Error("Failed to fetch orders!");
@@ -87,21 +66,14 @@ export const getOrders = async () => {
     return await response.json();
 }
 
-export const getOrderStatus = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
+export const updateOrderStatus = async (orderId, newStatus) => {
+    const response = await fetch(`/api/manager/orders/${orderId}`, {
+        method: 'PUT',
+        body: JSON.stringify(newStatus)
+    })
 
     if (!response.ok) {
-        throw new Error("Failed to fetch order status!");
-    }
-
-    return await response.json();
-}
-
-export const updateOrderStatus = async () => {
-    const response = await fetch(NEXT_SERVER_API+`/api/`)
-
-    if (!response.ok) {
-        throw new Error("Failed to update order status!");
+        throw new Error("Failed to update booking status!");
     }
 
     return await response.json();

@@ -1,15 +1,33 @@
 'use client'
 
 import AdminSidebar from '@/components/sidebar/ManagerSidebar'
-import AddProductForm from '@/components/forms/AddProductForm'
-import AddProductForm2 from '@/components/forms/AddProductForm2'
-import { Radio, Space } from 'antd'
 import React, { useState, useEffect } from 'react'
 import UserThumbnail from '@/components/UserThumbnail'
+import {toast} from 'react-toastify'
+import { getNewUserRequests } from '@/libs/manager'
+import Link from 'next/link'
 
 const page = () => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [requests, setRequests] = useState([])
+
+    useEffect(() => {
+        loadRequests();
+    }, [])
+
+    const loadRequests = async () => {
+        try {
+            const response = await getNewUserRequests();
+            setRequests(response);
+            if (response.length === 0) {
+                toast.error
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error('Failed to load new requests!');
+        }
+    }
 
     return (
         <div className='relative flex'>
@@ -30,16 +48,10 @@ const page = () => {
                         {/* <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them.</p> */}
                     </div>
                     <div className="flex flex-wrap -m-2">
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
-                        <UserThumbnail img={"https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/homepage/families-gallery/2023/revuelto/revuelto_m.png"} email={'xyz@gmail.com'} name={'XYZ'} />
+                        {requests && requests.length && requests.map((item, i) => (
+                            <Link key={item._id} href={`/manager/user/new-request/${item._id}`}><UserThumbnail img={item.user.image} email={item.user.email} name={item.user.name} /></Link>
+
+                        ))}
                     </div>
                 </div>
             </div>

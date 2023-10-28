@@ -1,6 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
 const CenterSchema = new Schema({
+    name: String,
     email: {
         type: String,
         unique: [true, 'Email already exists!'],
@@ -17,6 +18,10 @@ const CenterSchema = new Schema({
         city: String,
         area: String,
         address: String,
+    },
+    location: {
+        lat: Number,
+        lng: Number,
     },
 }, {timestamps: true});
 

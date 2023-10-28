@@ -2,8 +2,8 @@ import React from 'react'
 
 const InputField = ({type, title, placeholder, isTextArea, state, setState, required, disabled, containerStyle}) => {
     return (
-        <div class={`relative mb-4 ${containerStyle}`}>
-            <label class="leading-7 text-sm text-gray-700">{title}</label>
+        <div className={`relative mb-4 ${containerStyle}`}>
+            <label className="leading-7 text-sm text-gray-700">{title}</label>
 
             {isTextArea ? (
                 <textarea

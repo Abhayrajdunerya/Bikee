@@ -26,12 +26,15 @@ const UserSchema = new Schema({
         state: String,
         city: String,
         area: String,
+        address: String,
     },
-    aadhar: Object,
-    drivingLicense: Object,
+    aadhar: Array,
+    drivingLicense: Array,
     role: {
         type: String,
-        enum: ['user', 'admin', 'manager', 'worker']
+        enum: ['user', 'admin', 'manager', 'worker', 'renter'],
+        default: 'user',
+        required: [true, 'Role is required!']
     }
 }, {timestamps: true});
 

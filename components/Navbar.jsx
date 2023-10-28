@@ -8,6 +8,7 @@ import { MdOutlineLogin } from 'react-icons/md'
 import Link from 'next/link'
 import Image from "next/image"
 import CustomButton from '@/components/CustomButton'
+import { logo } from "@/constants/index";
 
 const navigation = [
   // { name: 'Dashboard', href: '#', current: true },
@@ -25,6 +26,7 @@ function classNames(...classes) {
 const Navbar = () => {
 
   const { data: session } = useSession();
+  const role = session?.user?.role || 'user'
 
   const [providers, setProviders] = useState(null);
   // const [toggleDropdown, setToggleDropdown] = useState(false)
@@ -42,7 +44,7 @@ const Navbar = () => {
     <Disclosure as="nav" className="shadow-md bg-primary-blue-100 z-30">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl padding-x">
+          <div className="mx-auto max-w-7xl padding-x ">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -58,11 +60,12 @@ const Navbar = () => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <Link href={'/'} className="flex flex-shrink-0 items-center">
-                  <img
+                  <Image src={logo} alt='logo' className='h-16 w-auto' width={500} height={500} />
+                  {/* <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                     alt="Your Company"
-                  />
+                  /> */}
                 </Link>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -91,7 +94,7 @@ const Navbar = () => {
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <Image
-                        className="h-8 w-8 rounded-full" src={session?.user.image} width={37} height={37} alt='profileImg'
+                        className="h-10 w-10 rounded-full" src={session?.user.image} width={37} height={37} alt='profileImg'
                       />
                     </Menu.Button>
                   </div>
@@ -118,13 +121,56 @@ const Navbar = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
+                            href="/user/orders"
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            Your bookings
+                          </Link>
+                        )}
+                      </Menu.Item>
+                      {role === 'user' && <Menu.Item>
+                        {({ active }) => (
+                          <Link
                             href="/user/become-renter"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Become a renter
                           </Link>
                         )}
-                      </Menu.Item>
+                      </Menu.Item>}
+
+                      {role === 'admin' && <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            href="/admin/dashboard"
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            Admin dashboard
+                          </Link>
+                        )}
+                      </Menu.Item>}
+
+                      {role === 'manager' && <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            href="/manager/dashboard"
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            Manager dashboard
+                          </Link>
+                        )}
+                      </Menu.Item>}
+
+                      {role === 'renter' && <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            href="/renter/dashboard"
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            Renter dashboard
+                          </Link>
+                        )}
+                      </Menu.Item>}
                       
                       <Menu.Item>
                         {({ active }) => (
@@ -143,11 +189,12 @@ const Navbar = () => {
                   </Transition>
                 </Menu>) : (
                   <>
-                    {providers && Object.values(providers).map((provider) => (
+                    {providers && Object.values(providers).map((provider, i) => (
                       // <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='bg-white z-10' >
                       //   Sign In
                       // </button>
                       <CustomButton
+                      key={i}
                       title='Sign In'
                       btnType='button'
                       containerStyles='text-primary-blue rounded-full bg-white min-w-[130px] z-10 shadow-md border'

@@ -11,8 +11,8 @@ const HowToUse = () => {
         },
         {
             imgUrl: '/assets/icons/select-to-cart.png',
-            heading: 'Add to Cart',
-            content: 'Easily add multiple product in your cart or direct book from "Book Now" button.',
+            heading: 'Book Product',
+            content: 'Easily book bikes & cars from "Book Now" button.',
         },
         {
             imgUrl: '/assets/icons/pick-up.png',

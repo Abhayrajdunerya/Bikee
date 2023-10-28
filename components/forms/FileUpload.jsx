@@ -1,71 +1,66 @@
-import {useState} from 'react'
-import axios from 'axios';
 import Resizer from 'react-image-file-resizer'
 import { TiDelete } from 'react-icons/ti'
-import { useSelector } from 'react-redux';
-
-const API = 'http://localhost:3000/api'
+import { uploadImgs, removeImgs } from '@/libs/cloudinary'
+import { toast } from 'react-toastify'
 
 const FileUpload = ({values, setValues, setLoading}) => {
-
-    const { user } = useSelector((state) => ({ ...state }));
 
     const fileUploadAndResize = (e) => {
         // console.log(e.target.files);
         // resize
         let files = e.target.files;
-        let allUploadedFiles = values.images;
+        let allUploadedFiles = values;
 
         if (files) {
             setLoading(true);
             for (let i = 0; i < files.length; i++) {
                 console.log(files[i]);
-                Resizer.imageFileResizer(files[i], 720, 720, 'JPEG', 100, 0, (uri) => {
-                    // console.log(uri);
-                    axios.post(API + `/uploadimages`, { image: uri }, {
-                        headers: {
-                            authtoken: user ? user.token : '',
-                        },
-                    }).then(res => {
-                        console.log('IMAGE UPLOAD UPLOAD DATA ', res);
+                Resizer.imageFileResizer(files[i], 720, 720, 'JPEG', 100, 0, async (uri) => {
+
+                    try {
+                        const response = await uploadImgs(uri);
+    
+                        console.log(response);
+    
                         setLoading(false);
-                        allUploadedFiles.push(res.data);
-                        setValues({ ...values, images: allUploadedFiles });
-                    }).catch(err => {
+                        allUploadedFiles.push(response);
+                        setValues(allUploadedFiles)
+                        
+                    } catch (error) {
                         setLoading(false);
-                        console.log('CLOUDINARY UPLOAD ERR ', err);
-                    })
+                        console.log('CLOUDINARY UPLOAD ERR', error);
+                        toast.success('Failed to upload image')
+                    }
+                   
                 }, 'base64')
             }
         }
         
     }
 
-    const handleImageRemove = (public_id) => {
-        setLoading(true);
-        axios.post(API + `/removeimage`, { public_id }, {
-            headers: {
-                authtoken: user ? user.token : '',
-            }
-        })
-            .then(res => {
-                setLoading(false);
-                const { images } = values;
-                let filteredImage = images.filter((item) => {
-                    return item.public_id !== public_id;
-                });
-                setValues({ ...values, images: filteredImage });
-            })
-            .catch(err => {
-                setLoading(false);
-                console.log(err);
-            })
+    const handleImageRemove = async (public_id) => {
+        try {
+            setLoading(true);
+           
+            const response = await removeImgs(public_id);
+            
+            setLoading(false);
+            let filteredImage = values.filter((item) => {
+                return item.public_id !== public_id;
+            });
+            setValues(filteredImage);
+            
+        } catch (error) {
+            setLoading(false);
+            console.log(error);
+            toast.error('Failed to remove image');
+        }
     }
 
     return (
         <div className="">
             <div className="flex space-x-4 flex-wrap mb-2">
-                {values.images && values.images.map((image) => (
+                {values && values.map((image) => (
                     <div key={image.public_id} className='relative'>
                         <div className=''>
                             <TiDelete size={22} onClick={() => handleImageRemove(image.public_id)} className='text-red-500 hover:text-red-600 absolute -right-[12px] -top-[12px]' />
