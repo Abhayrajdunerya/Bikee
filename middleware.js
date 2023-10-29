@@ -25,18 +25,12 @@ export default withAuth(
         //     req.nextauth.token?.role !== 'user')) {
         //     return NextResponse.rewrite(new URL('/denied', req.url))
         // }
-
-
-
-        // return true;
-        // return NextResponse.redirect(new URL('/', req.url));
     }, 
     {
         callbacks: {
             authorized: ({ token }) => !!token
         }
     }
-    
 
 )
 

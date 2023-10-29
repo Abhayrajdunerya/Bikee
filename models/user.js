@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     },
     mobile: {
         type: Number,
-        unique: [true, 'Mobile no. already exists!']
+        // unique: [true, 'Mobile no. already exists!']
     },
     gender: {
         type: String,
